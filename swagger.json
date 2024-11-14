@@ -1,0 +1,2460 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "SocialManager WebAPI",
+      "contact": {
+        "name": "MrPeralta",
+        "email": "tiago@socialpal.io"
+      },
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://test-api.socialpal.io",
+        "description": "Test Server",
+        "variables": {
+          "ct": {
+            "default": "45f7f082-6534-47e2-96ac-5fd48cf8d308",
+            "description": "Customer Token"
+          },
+          "Origin": {
+            "default": "https://tp-devui.socialpal.io",
+            "description": "Origin Header"
+          }
+        }
+      },
+      {
+        "url": "https://dev-api.socialpal.io",
+        "description": "Dev Server"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Auth Requests"
+      },
+      {
+        "name": "Bookmark Requests"
+      },
+      {
+        "name": "Contacts Requests"
+      },
+      {
+        "name": "Public Requests"
+      },
+      {
+        "name": "Send Requests"
+      },
+      {
+        "name": "Swap Requests"
+      },
+      {
+        "name": "Token Requests"
+      },
+      {
+        "name": "User Requests"
+      }
+    ],
+    "paths": {
+      "/auth/2fa/": {
+        "post": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "WebAPI 2FA Auth",
+          "description": "WebAPI 2FA Auth",
+          "operationId": "webapi2faAuth",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "handle": {
+                      "type": "string",
+                      "example": "someuser"
+                    },
+                    "pin": {
+                      "type": "string",
+                      "example": "rz2aWs"
+                    },
+                    "social": {
+                      "type": "string",
+                      "example": "telegram"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Login Response if Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/auth/google/process/": {
+        "post": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "WebAPI Google Auth",
+          "description": "WebAPI Google Auth",
+          "operationId": "webapiGoogleAuth",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "clientId": {
+                          "type": "string",
+                          "example": "32423423423424se.apps.googleusercontent.com"
+                        },
+                        "credential": {
+                          "type": "string",
+                          "example": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImU4NjNmZTI5MmZhMmEyOTY3Y"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Login Response if Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/auth/telegram/process/": {
+        "post": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "WebAPI Telegram Auth",
+          "description": "WebAPI Telegram Auth",
+          "operationId": "webapiTelegramAuth",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "auth": {
+                      "type": "object",
+                      "properties": {
+                        "auth_date": {
+                          "type": "number",
+                          "example": 1724080956
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "example": "FirstName"
+                        },
+                        "hash": {
+                          "type": "string",
+                          "example": "56f63dc1a8da6621a1bb3002b295571a06d2ed711541fdac7491d63046580ffc"
+                        },
+                        "id": {
+                          "type": "number",
+                          "example": 345345345345
+                        },
+                        "photo_url": {
+                          "type": "string",
+                          "example": "https://t.me/i/userpic/320/userpic.jpg"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "UserName"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Login Response if Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/auth/token/refresh/": {
+        "post": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "JWT Refresh",
+          "description": "JWT Refresh",
+          "operationId": "jwtRefresh",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "refresh": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJSU"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "access": {
+                        "$ref": "#/components/schemas/AccessToken"
+                      },
+                      "refresh": {
+                        "$ref": "#/components/schemas/RefreshToken"
+                      }
+                    },
+                    "required": [
+                      "access",
+                      "refresh"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/auth/x/init": {
+        "get": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "WebAPI Twitter Auth Init",
+          "description": "WebAPI Twitter Auth Init",
+          "operationId": "webapiTwitterAuthInit",
+          "responses": {
+            "200": {
+              "description": "X Init URL to be called",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/XInit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/auth/x/process/": {
+        "get": {
+          "tags": [
+            "Auth Requests"
+          ],
+          "summary": "WebAPI Twitter Auth Process",
+          "description": "WebAPI Twitter Auth Process",
+          "operationId": "webapiTwitterAuthProcess",
+          "parameters": [
+            {
+              "name": "auth_uuid",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "state",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "code",
+              "in": "query",
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Login Response if Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/LoginResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/public/chains": {
+        "get": {
+          "tags": [
+            "Public Requests"
+          ],
+          "summary": "WebAPI Get Public Chains",
+          "description": "WebAPI Get Public Chains",
+          "operationId": "webapiGetPublicChains",
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/PublicChainResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/public/tokens/{chain}": {
+        "get": {
+          "tags": [
+            "Public Requests"
+          ],
+          "summary": "WebAPI Get Public Tokens",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "chain",
+              "schema": {
+                "type": "string",
+                "default": "bsc"
+              },
+              "required": true,
+              "description": "chain name (bsc/eth/etc)"
+            }
+          ],
+          "description": "WebAPI Get Public Tokens",
+          "operationId": "webapiGetPublicTokens",
+          "responses": {
+            "200": {
+              "description": "Tokens Response if Ok",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/TokensResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/send/dest": {
+        "post": {
+          "tags": [
+            "Send Requests"
+          ],
+          "summary": "WebAPI Send Tokens",
+          "description": "WebAPI Send Tokens",
+          "operationId": "webapiSendTokens",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "dest": {
+                      "type": "string",
+                      "example": "gmail address or tg handle or 0x addr"
+                    },
+                    "social": {
+                      "type": "string",
+                      "example": "google/tg/insta"
+                    },
+                    "token": {
+                      "type": "number",
+                      "example": "2 (get the list of tokens from the apis to get the ids)"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SendTokenResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/send/genclaim": {
+        "post": {
+          "tags": [
+            "Send Requests"
+          ],
+          "summary": "WebAPI Send ClaimSend",
+          "description": "WebAPI Send ClaimSend",
+          "operationId": "webapiSendClaimsend",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "string",
+                      "example": "1.2345"
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "token": {
+                      "type": "number",
+                      "example": -1
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GenClaimResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/send/retrieveclaim": {
+        "post": {
+          "tags": [
+            "Send Requests"
+          ],
+          "summary": "WebAPI Send ClaimRetrieve",
+          "description": "WebAPI Send ClaimRetrieve",
+          "operationId": "webapiSendClaimretrieve",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "key": {
+                      "type": "string",
+                      "example": "eyJjbGFpbV91dWlkIjogIjk0YzkzMGVhNTgxNTRjZmE4Y2ZhZGY4NzBjODIxOTU1IiwgImNsYWltX3Bhc3MiOiAiZjVlMGMxZDBmYTA1NGU4MmJlNmQ3MzE3ZDg5OTAyM2QifQ=="
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RetrieveClaimResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/swap/generate": {
+        "post": {
+          "tags": [
+            "Swap Requests"
+          ],
+          "summary": "WebAPI Swap Generate",
+          "description": "WebAPI Swap Generate",
+          "operationId": "webapiSwapGenerate",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "example": 20
+                    },
+                    "buy_token_id": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "sell_token_id": {
+                      "type": "number",
+                      "example": -1
+                    },
+                    "slippage": {
+                      "type": "number",
+                      "example": 20
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Swap Generation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SwapGenerateResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/swap/quote": {
+        "post": {
+          "tags": [
+            "Swap Requests"
+          ],
+          "summary": "WebAPI Swap Quote",
+          "description": "WebAPI Swap Quote",
+          "operationId": "webapiSwapQuote",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "example": 0.5
+                    },
+                    "buy_token_id": {
+                      "type": "number",
+                      "example": 71
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "sell_token_id": {
+                      "type": "number",
+                      "example": -1
+                    },
+                    "slippage": {
+                      "type": "number",
+                      "example": 2
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SwapQuoteResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/swap/validate": {
+        "post": {
+          "tags": [
+            "Swap Requests"
+          ],
+          "summary": "WebAPI Swap Confirm-Reject",
+          "description": "WebAPI Swap Confirm-Reject",
+          "operationId": "webapiSwapConfirmReject",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "confirm": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "tx_uuid": {
+                      "type": "string",
+                      "example": "65ea0c4c-2794-447d-9249-a187313462de"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SwapValidateResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/tokens/bookmarks": {
+        "post": {
+          "tags": [
+            "Token Requests"
+          ],
+          "summary": "WebAPI Token Favorites Add-Remove",
+          "description": "WebAPI Token Favorites Add-Remove",
+          "operationId": "webapiTokenFavoritesAddRemove",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "example": "add"
+                    },
+                    "chain": {
+                      "type": "number",
+                      "example": 56
+                    },
+                    "token": {
+                      "type": "number",
+                      "example": 46
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TrueResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/tokens/search": {
+        "post": {
+          "tags": [
+            "Token Requests"
+          ],
+          "summary": "WebAPI Token Search",
+          "description": "WebAPI Token Search",
+          "operationId": "webapiTokenSearch",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "chain": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "keyword": {
+                      "type": "string",
+                      "example": "cat"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SearchTokenResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/tokens/select": {
+        "post": {
+          "tags": [
+            "Token Requests"
+          ],
+          "summary": "WebAPI Token Select",
+          "description": "WebAPI Token Select",
+          "operationId": "webapiTokenSelect",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string",
+                      "example": 9.251531565267083e+47
+                    },
+                    "chain": {
+                      "type": "number",
+                      "example": 56
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/SelectTokenResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/2fa": {
+        "post": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI User 2FA Validate",
+          "description": "WebAPI User 2FA Validate",
+          "operationId": "webapiUser2faValidate",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "example": "one of (enable/disable/validate)"
+                    },
+                    "pin": {
+                      "type": "string",
+                      "example": "343624"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TrueResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/address": {
+        "get": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI Get User Address",
+          "description": "WebAPI Get User Address",
+          "operationId": "webapiGetUserAddress",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserAddressResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/balance/{chain}/{tokenid}": {
+        "get": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI Get User Balance",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "chain",
+              "schema": {
+                "type": "string",
+                "default": "bsc"
+              },
+              "required": true,
+              "description": "chain name (bsc/eth/etc)"
+            },
+            {
+              "in": "path",
+              "name": "tokenid",
+              "schema": {
+                "type": "integer",
+                "default": -1
+              },
+              "required": true,
+              "description": "token id (get from user tokens and/or public tokens)"
+            }
+          ],
+          "description": "WebAPI Get User Balance",
+          "operationId": "webapiGetUserBalance",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/TokenBalanceResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/balances/{chain}/{hidezero}": {
+        "get": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI Get User Balances",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "chain",
+              "schema": {
+                "type": "string",
+                "default": "bsc"
+              },
+              "required": true
+            },
+            {
+              "in": "path",
+              "name": "hidezero",
+              "schema": {
+                "type": "integer",
+                "default": 0
+              },
+              "required": true,
+              "description": "Hide Zero Balances 0 or 1"
+            }
+          ],
+          "description": "WebAPI Get User Balances",
+          "operationId": "webapiGetUserBalances",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserTokenBalancesResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/bookmarks/add": {
+        "post": {
+          "tags": [
+            "Bookmark Requests"
+          ],
+          "summary": "WebAPI Add Bookmark",
+          "description": "WebAPI Add Bookmark",
+          "operationId": "webapiAddBookmark",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string",
+                      "example": 150870393620808
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "example": "This is a sample address"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddBookmarkResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/bookmarks/del": {
+        "post": {
+          "tags": [
+            "Bookmark Requests"
+          ],
+          "summary": "WebAPI Del Bookmarks",
+          "description": "WebAPI Del Bookmarks",
+          "operationId": "webapiDelBookmarks",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "address": {
+                      "type": "string",
+                      "example": 42911278220018504
+                    },
+                    "chain": {
+                      "type": "string",
+                      "example": "bsc"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/DelBookmarkResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/bookmarks/get": {
+        "get": {
+          "tags": [
+            "Bookmark Requests"
+          ],
+          "summary": "WebAPI Get Bookmarks",
+          "description": "WebAPI Get Bookmarks",
+          "operationId": "webapiGetBookmarks",
+          "responses": {
+            "200": {
+              "description": "",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/GetBookmarkResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/claims/{chain}": {
+        "get": {
+          "tags": [
+            "Send Requests"
+          ],
+          "summary": "WebAPI User ClaimTracking",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "chain",
+              "schema": {
+                "type": "string",
+                "default": "bsc"
+              },
+              "required": true,
+              "description": "chain name (bsc/eth/etc)"
+            }
+          ],
+          "description": "WebAPI User ClaimTracking",
+          "operationId": "webapiUserClaimtracking",
+          "responses": {
+            "200": {
+              "description": "List Claims Sent and Retrieved",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "boolean"
+                      },
+                      "message": {
+                        "$ref": "#/components/schemas/ClaimTrackingResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/contacts/add": {
+        "post": {
+          "tags": [
+            "Contacts Requests"
+          ],
+          "summary": "WebAPI Add Contacts",
+          "description": "WebAPI Add Contacts",
+          "operationId": "webapiAddContacts",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "social": {
+                      "type": "string",
+                      "example": "google"
+                    },
+                    "user": {
+                      "type": "string",
+                      "example": "some@email.domain"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/AddContactResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/contacts/del": {
+        "post": {
+          "tags": [
+            "Contacts Requests"
+          ],
+          "summary": "WebAPI Del Contacts",
+          "description": "WebAPI Del Contacts",
+          "operationId": "webapiDelContacts",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "social": {
+                      "type": "string",
+                      "example": "google"
+                    },
+                    "user": {
+                      "type": "string",
+                      "example": "some@email.domain"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/RemoveContactResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/contacts/get": {
+        "get": {
+          "tags": [
+            "Contacts Requests"
+          ],
+          "summary": "WebAPI Get Contacts",
+          "description": "WebAPI Get Contacts",
+          "operationId": "webapiGetContacts",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/GetContactsResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/user/seedrecovery": {
+        "post": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI User Seed Recovery",
+          "description": "WebAPI User Seed Recovery",
+          "operationId": "webapiUserSeedRecovery",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pin": {
+                      "type": "string",
+                      "example": "511944"
+                    }
+                  }
+                }
+              }
+            },
+            "required": false
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserSeedRecoveryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "x-codegen-request-body-name": "body"
+        }
+      },
+      "/user/tokens/{chain}": {
+        "get": {
+          "tags": [
+            "User Requests"
+          ],
+          "summary": "WebAPI Get User Tokens",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "chain",
+              "schema": {
+                "type": "string",
+                "default": "bsc"
+              },
+              "required": true
+            }
+          ],
+          "description": "WebAPI Get User Tokens",
+          "operationId": "webapiGetUserTokens",
+          "responses": {
+            "200": {
+              "description": "Successful response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/UserTokensResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        },
+        "ct-origin": {
+          "name": "ct-origin",
+          "type": "apiKey",
+          "in": "header"
+        },
+        "ct-token": {
+          "name": "ct-token",
+          "type": "apiKey",
+          "in": "header"
+        }
+      },
+      "schemas": {
+        "TokensResponse": {
+          "type": "object",
+          "properties": {
+            "tokens": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Token"
+              }
+            }
+          },
+          "required": [
+            "tokens"
+          ]
+        },
+        "Token": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "is_native": {
+              "type": "boolean"
+            },
+            "decimals": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "string"
+            }
+          }
+        },
+        "LoginResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "jwt": {
+                  "type": "object",
+                  "properties": {
+                    "refresh": {
+                      "type": "string",
+                      "format": "token"
+                    },
+                    "access": {
+                      "type": "string",
+                      "format": "token"
+                    },
+                    "exp": {
+                      "type": "integer"
+                    },
+                    "iat": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "refresh",
+                    "access",
+                    "exp",
+                    "iat"
+                  ]
+                },
+                "userdata": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "integer"
+                    },
+                    "social_handle": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "social": {
+                      "type": "string"
+                    },
+                    "profile_img_url": {
+                      "type": "string",
+                      "format": "uri"
+                    },
+                    "address": {
+                      "type": "string",
+                      "format": "ethereum-address"
+                    },
+                    "2fa": {
+                      "type": "boolean"
+                    },
+                    "pk": {
+                      "type": "string",
+                      "format": "hex-color-code"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "social_handle",
+                    "username",
+                    "social",
+                    "profile_img_url",
+                    "address",
+                    "2fa",
+                    "pk"
+                  ]
+                }
+              }
+            },
+            "rpcnode": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "status",
+            "message",
+            "rpcnode"
+          ]
+        },
+        "PublicChainResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "chains"
+              ],
+              "properties": {
+                "chains": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Chain"
+                  }
+                }
+              }
+            }
+          },
+          "required": [
+            "status",
+            "message"
+          ]
+        },
+        "Chain": {
+          "type": "object",
+          "required": [
+            "name",
+            "chain_id",
+            "node_url",
+            "token",
+            "token_decimals"
+          ],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name of the blockchain chain."
+            },
+            "chain_id": {
+              "type": "integer",
+              "description": "The ID of the blockchain chain."
+            },
+            "node_url": {
+              "type": "string",
+              "description": "The URL of the blockchain node."
+            },
+            "token": {
+              "type": "string",
+              "description": "The token associated with the chain."
+            },
+            "token_decimals": {
+              "type": "integer",
+              "description": "The decimal precision of the token."
+            }
+          }
+        },
+        "XInit": {
+          "type": "object",
+          "properties": {
+            "auth_url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "auth_uuid": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+            }
+          },
+          "required": [
+            "auth_url",
+            "auth_uuid"
+          ]
+        },
+        "AccessToken": {
+          "type": "object",
+          "properties": {
+            "access": {
+              "type": "string",
+              "description": "The JWT access token"
+            }
+          }
+        },
+        "RefreshToken": {
+          "type": "object",
+          "properties": {
+            "refresh": {
+              "type": "string",
+              "description": "The JWT refresh token"
+            }
+          }
+        },
+        "GetBookmarkResponse": {
+          "type": "object",
+          "required": [
+            "bookmarks"
+          ],
+          "properties": {
+            "bookmarks": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/GetBookmarkObject"
+              }
+            }
+          }
+        },
+        "GetBookmarkObject": {
+          "type": "object",
+          "required": [
+            "address",
+            "chain",
+            "chain_id"
+          ],
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "comment": {
+              "type": "string"
+            },
+            "chain": {
+              "type": "string"
+            },
+            "chain_id": {
+              "type": "integer"
+            }
+          }
+        },
+        "AddBookmarkResponse": {
+          "type": "object",
+          "required": [
+            "success",
+            "code"
+          ],
+          "properties": {
+            "success": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        },
+        "DelBookmarkResponse": {
+          "type": "object",
+          "required": [
+            "error",
+            "code"
+          ],
+          "properties": {
+            "error": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        },
+        "AddContactResponse": {
+          "type": "object",
+          "required": [
+            "success",
+            "code"
+          ],
+          "properties": {
+            "success": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        },
+        "RemoveContactResponse": {
+          "type": "object",
+          "required": [
+            "success",
+            "code"
+          ],
+          "properties": {
+            "success": {
+              "type": "string"
+            },
+            "code": {
+              "type": "string"
+            }
+          }
+        },
+        "GetContactsResponse": {
+          "type": "object",
+          "required": [
+            "contacts"
+          ],
+          "properties": {
+            "contacts": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/GetContactObject"
+              }
+            }
+          }
+        },
+        "GetContactObject": {
+          "type": "object",
+          "required": [
+            "username",
+            "url",
+            "social_network",
+            "social_network_id",
+            "id"
+          ],
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "social_network": {
+              "type": "string"
+            },
+            "social_network_id": {
+              "type": "integer"
+            },
+            "id": {
+              "type": "integer"
+            }
+          }
+        },
+        "SendTokenResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "send"
+              ],
+              "properties": {
+                "send": {
+                  "type": "object",
+                  "required": [
+                    "txhash",
+                    "explorer"
+                  ],
+                  "properties": {
+                    "txhash": {
+                      "type": "string"
+                    },
+                    "explorer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GenClaimResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "send_data"
+              ],
+              "properties": {
+                "send_data": {
+                  "type": "object",
+                  "required": [
+                    "token",
+                    "amount",
+                    "send_tx_hash",
+                    "send_tx_explorer",
+                    "claim_key"
+                  ],
+                  "properties": {
+                    "token": {
+                      "type": "integer"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "send_tx_hash": {
+                      "type": "string"
+                    },
+                    "send_tx_explorer": {
+                      "type": "string"
+                    },
+                    "claim_key": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "RetrieveClaimResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "send_data"
+              ],
+              "properties": {
+                "send_data": {
+                  "type": "object",
+                  "required": [
+                    "token",
+                    "amount",
+                    "tx_hash",
+                    "tx_explorer"
+                  ],
+                  "properties": {
+                    "token": {
+                      "type": "string"
+                    },
+                    "amount": {
+                      "type": "number"
+                    },
+                    "tx_hash": {
+                      "type": "string"
+                    },
+                    "tx_explorer": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ClaimTrackingResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "sent": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SentClaim"
+                  }
+                },
+                "claimed": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ClaimedClaim"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "SentClaim": {
+          "type": "object",
+          "required": [
+            "uuid",
+            "sent_at",
+            "token",
+            "amount",
+            "sent_tx"
+          ],
+          "properties": {
+            "uuid": {
+              "type": "string"
+            },
+            "sender": {
+              "type": "string"
+            },
+            "sent_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "token": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "sent_tx": {
+              "type": "string"
+            }
+          }
+        },
+        "ClaimedClaim": {
+          "type": "object",
+          "required": [
+            "uuid",
+            "sender",
+            "sent_at",
+            "token",
+            "amount",
+            "sent_tx",
+            "claimed_at",
+            "claim_tx"
+          ],
+          "properties": {
+            "uuid": {
+              "type": "string"
+            },
+            "sender": {
+              "type": "string"
+            },
+            "sent_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "token": {
+              "type": "string"
+            },
+            "amount": {
+              "type": "number"
+            },
+            "sent_tx": {
+              "type": "string"
+            },
+            "claimed_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "claim_tx": {
+              "type": "string"
+            }
+          }
+        },
+        "SwapGenerateResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "swap_data",
+                "confirm"
+              ],
+              "properties": {
+                "swap_data": {
+                  "type": "object",
+                  "required": [
+                    "chain",
+                    "estimated_gas",
+                    "fees",
+                    "sell_token_id",
+                    "sell_token_name",
+                    "buy_token_id",
+                    "buy_token_name",
+                    "in_amount",
+                    "out_amount",
+                    "price",
+                    "price_impact",
+                    "expire_time"
+                  ],
+                  "properties": {
+                    "chain": {
+                      "type": "string"
+                    },
+                    "estimated_gas": {
+                      "type": "integer"
+                    },
+                    "fees": {
+                      "type": "number"
+                    },
+                    "sell_token_id": {
+                      "type": "integer"
+                    },
+                    "sell_token_name": {
+                      "type": "string"
+                    },
+                    "buy_token_id": {
+                      "type": "integer"
+                    },
+                    "buy_token_name": {
+                      "type": "string"
+                    },
+                    "in_amount": {
+                      "type": "number"
+                    },
+                    "out_amount": {
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "price_impact": {
+                      "type": "string"
+                    },
+                    "expire_time": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "confirm": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "SwapValidateResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "sold_amount",
+                "bought_amount",
+                "hash",
+                "explorer_url"
+              ],
+              "properties": {
+                "sold_amount": {
+                  "type": "number"
+                },
+                "bought_amount": {
+                  "type": "number"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "explorer_url": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "SwapQuoteResponse": {
+          "type": "object",
+          "required": [
+            "status",
+            "message"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "required": [
+                "quote"
+              ],
+              "properties": {
+                "quote": {
+                  "type": "object",
+                  "required": [
+                    "chain",
+                    "estimated_gas",
+                    "fees",
+                    "sell_token_id",
+                    "sell_token_name",
+                    "buy_token_id",
+                    "buy_token_name",
+                    "in_amount",
+                    "out_amount",
+                    "price",
+                    "price_impact"
+                  ],
+                  "properties": {
+                    "chain": {
+                      "type": "string"
+                    },
+                    "estimated_gas": {
+                      "type": "integer"
+                    },
+                    "fees": {
+                      "type": "number"
+                    },
+                    "sell_token_id": {
+                      "type": "integer"
+                    },
+                    "sell_token_name": {
+                      "type": "string"
+                    },
+                    "buy_token_id": {
+                      "type": "integer"
+                    },
+                    "buy_token_name": {
+                      "type": "string"
+                    },
+                    "in_amount": {
+                      "type": "number"
+                    },
+                    "out_amount": {
+                      "type": "number"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "price_impact": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "TrueResponse": {
+          "type": "object",
+          "required": [
+            "status"
+          ],
+          "properties": {
+            "status": {
+              "type": "boolean"
+            }
+          }
+        },
+        "SearchTokenResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "$ref": "#/components/schemas/SearchTokenListObject"
+            }
+          }
+        },
+        "SearchTokenListObject": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/SearchTokenTokenObject"
+          }
+        },
+        "SearchTokenTokenObject": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "chain": {
+              "type": "integer"
+            },
+            "priceUsd": {
+              "type": "number"
+            },
+            "priceChange": {
+              "type": "number"
+            },
+            "volume": {
+              "type": "number"
+            }
+          }
+        },
+        "SelectTokenResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "$ref": "#/components/schemas/SelectTokenInfo"
+            }
+          }
+        },
+        "SelectTokenInfo": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "$ref": "#/components/schemas/SelectTokenDetail"
+            }
+          }
+        },
+        "SelectTokenDetail": {
+          "type": "object",
+          "properties": {
+            "token_id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "symbol": {
+              "type": "string"
+            },
+            "decimals": {
+              "type": "integer"
+            }
+          }
+        },
+        "UserAddressResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "$ref": "#/components/schemas/AddressInfo"
+            }
+          }
+        },
+        "AddressInfo": {
+          "type": "object",
+          "properties": {
+            "address": {
+              "type": "string"
+            }
+          }
+        },
+        "TokenBalanceResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "balance": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "UserTokenBalancesResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "balances": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserTokenBalancesBalance"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "UserTokenBalancesBalance": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            },
+            "balance": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "string"
+            }
+          }
+        },
+        "UserTokensResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "tokens": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "UserToken": {
+          "type": "object",
+          "properties": {
+            "symbol": {
+              "type": "string"
+            },
+            "id": {
+              "type": "integer"
+            },
+            "is_native": {
+              "type": "boolean"
+            },
+            "decimals": {
+              "type": "integer"
+            },
+            "address": {
+              "type": "string"
+            }
+          }
+        },
+        "UserSeedRecoveryResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "seed": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "GenericErrorResponse": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "400": {
+          "description": "Bad request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericErrorResponse"
+              }
+            }
+          }
+        },
+        "401": {
+          "description": "Unauthorized access",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericErrorResponse"
+              }
+            }
+          }
+        },
+        "403": {
+          "description": "Unauthorized access",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericErrorResponse"
+              }
+            }
+          }
+        },
+        "404": {
+          "description": "Resource not found",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericErrorResponse"
+              }
+            }
+          }
+        },
+        "500": {
+          "description": "Internal server error",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenericErrorResponse"
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {},
+      {
+        "bearerAuth": []
+      },
+      {
+        "ct-origin": []
+      },
+      {
+        "ct-token": []
+      }
+    ],
+    "x-original-swagger-version": "2.0"
+  }
