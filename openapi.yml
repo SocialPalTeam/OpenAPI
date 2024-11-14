@@ -12,10 +12,10 @@
       variables:
         ct:
           default: 45f7f082-6534-47e2-96ac-5fd48cf8d308
-          description: Customer Token
+          description: Customer Token (default only for testenv)
         Origin:
-          default: https://tp-devui.socialpal.io
-          description: Origin Header
+          default: https://open-api.socialpal.io
+          description: Origin Header (Default only for testenv)
     - url: https://dev-api.socialpal.io
       description: Dev Server
   tags:
