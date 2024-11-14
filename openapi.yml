@@ -550,7 +550,7 @@
                 properties:
                   address:
                     type: string
-                    example: 9.251531565267083e+47
+                    example: 0x54645645645656
                   chain:
                     type: number
                     example: 56
@@ -677,7 +677,7 @@
                 properties:
                   address:
                     type: string
-                    example: 150870393620808
+                    example: 0x98327489279834
                   chain:
                     type: string
                     example: bsc
@@ -708,7 +708,7 @@
                 properties:
                   address:
                     type: string
-                    example: 42911278220018504
+                    example: 0x42911278220018504
                   chain:
                     type: string
                     example: bsc
