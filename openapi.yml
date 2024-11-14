@@ -12,10 +12,10 @@
       variables:
         ct:
           default: 45f7f082-6534-47e2-96ac-5fd48cf8d308
-          description: Customer Token
+          description: Customer Token (default only for testenv)
         Origin:
-          default: https://tp-devui.socialpal.io
-          description: Origin Header
+          default: https://open-api.socialpal.io
+          description: Origin Header (Default only for testenv)
     - url: https://dev-api.socialpal.io
       description: Dev Server
   tags:
@@ -550,7 +550,7 @@
                 properties:
                   address:
                     type: string
-                    example: 9.251531565267083e+47
+                    example: 0x54645645645656
                   chain:
                     type: number
                     example: 56
@@ -677,7 +677,7 @@
                 properties:
                   address:
                     type: string
-                    example: 150870393620808
+                    example: 0x98327489279834
                   chain:
                     type: string
                     example: bsc
@@ -708,7 +708,7 @@
                 properties:
                   address:
                     type: string
-                    example: 42911278220018504
+                    example: 0x42911278220018504
                   chain:
                     type: string
                     example: bsc
