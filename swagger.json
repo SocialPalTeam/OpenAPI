@@ -1542,6 +1542,7 @@
         "required": [
           "name",
           "chain_id",
+          "chain_logo",
           "node_url",
           "token",
           "token_decimals"
@@ -1554,6 +1555,10 @@
           "chain_id": {
             "type": "integer",
             "description": "The ID of the blockchain chain."
+          },
+          "chain_logo": {
+            "type": "string",
+            "description": "The URL of the blockchain logo"
           },
           "node_url": {
             "type": "string",
